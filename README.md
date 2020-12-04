@@ -19,7 +19,7 @@ make sure you have installed `react-native-reanimated` v1
 
 ## Example
 
-![Skeleton components](https://github.com/asaeed14/react-native-toast/blob/main/example.gif)
+![Skeleton components](https://raw.githubusercontent.com/asaeed14/react-native-animated-skeleton/master/example.gif)
 
 ## How to Use
 
