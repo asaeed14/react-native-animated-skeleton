@@ -24,6 +24,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * useSkeletonValue
  *
  */
+// @ts-ignore
 var react_native_reanimated_1 = __importStar(require("react-native-reanimated"));
 var Clock = react_native_reanimated_1.default.Clock, Value = react_native_reanimated_1.default.Value, useCode = react_native_reanimated_1.default.useCode, set = react_native_reanimated_1.default.set, block = react_native_reanimated_1.default.block, cond = react_native_reanimated_1.default.cond, startClock = react_native_reanimated_1.default.startClock, clockRunning = react_native_reanimated_1.default.clockRunning, not = react_native_reanimated_1.default.not, eq = react_native_reanimated_1.default.eq, timing = react_native_reanimated_1.default.timing;
 var runTiming = function (_a) {

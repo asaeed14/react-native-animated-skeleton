@@ -21,7 +21,9 @@ exports.useSkeletonValue = void 0;
  *
  */
 var react_1 = __importDefault(require("react"));
+// @ts-ignore
 var react_native_1 = require("react-native");
+// @ts-ignore
 var react_native_reanimated_1 = __importDefault(require("react-native-reanimated"));
 var useSkeletonValue_1 = __importDefault(require("./useSkeletonValue"));
 exports.useSkeletonValue = useSkeletonValue_1.default;

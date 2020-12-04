@@ -3,6 +3,7 @@
  * useSkeletonValue
  *
  */
+// @ts-ignore
 import Animated, { Easing } from 'react-native-reanimated';
 
 const {
