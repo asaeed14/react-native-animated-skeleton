@@ -29,8 +29,8 @@ var useSkeletonValue_1 = __importDefault(require("./useSkeletonValue"));
 exports.useSkeletonValue = useSkeletonValue_1.default;
 var interpolate = react_native_reanimated_1.default.interpolate, Extrapolate = react_native_reanimated_1.default.Extrapolate;
 var Skeleton = function (_b) {
-    var _c = _b.loaderStyle, loaderStyle = _c === void 0 ? {} : _c, _d = _b.numberOfItems, numberOfItems = _d === void 0 ? 3 : _d, _e = _b.direction, direction = _e === void 0 ? 'row' : _e;
-    var progress = useSkeletonValue_1.default();
+    var _c = _b.loaderStyle, loaderStyle = _c === void 0 ? {} : _c, _d = _b.numberOfItems, numberOfItems = _d === void 0 ? 3 : _d, _e = _b.direction, direction = _e === void 0 ? 'row' : _e, _f = _b.speed, speed = _f === void 0 ? 1000 : _f;
+    var progress = useSkeletonValue_1.default({ speed: speed });
     var length = numberOfItems;
     var delta = 1 / length;
     return (react_1.default.createElement(react_native_1.View, { style: { flexDirection: direction } }, Array.from(Array(numberOfItems), function (_a, i) {

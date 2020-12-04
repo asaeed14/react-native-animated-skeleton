@@ -28,7 +28,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var react_native_reanimated_1 = __importStar(require("react-native-reanimated"));
 var Clock = react_native_reanimated_1.default.Clock, Value = react_native_reanimated_1.default.Value, useCode = react_native_reanimated_1.default.useCode, set = react_native_reanimated_1.default.set, block = react_native_reanimated_1.default.block, cond = react_native_reanimated_1.default.cond, startClock = react_native_reanimated_1.default.startClock, clockRunning = react_native_reanimated_1.default.clockRunning, not = react_native_reanimated_1.default.not, eq = react_native_reanimated_1.default.eq, timing = react_native_reanimated_1.default.timing;
 var runTiming = function (_a) {
-    var clock = _a.clock, _b = _a.speed, speed = _b === void 0 ? 1000 : _b;
+    var clock = _a.clock, speed = _a.speed;
     var state = {
         finished: new Value(0),
         position: new Value(0),
@@ -51,7 +51,8 @@ var runTiming = function (_a) {
         state.position,
     ]);
 };
-var useSkeletonValue = function (speed) {
+var useSkeletonValue = function (_a) {
+    var _b = (_a === void 0 ? {} : _a).speed, speed = _b === void 0 ? 1000 : _b;
     var progress = new Value(0);
     var clock = new Clock();
     useCode(function () { return block([set(progress, runTiming({ clock: clock, speed: speed }))]); }, [

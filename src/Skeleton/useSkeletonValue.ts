@@ -5,6 +5,7 @@
  */
 // @ts-ignore
 import Animated, { Easing } from 'react-native-reanimated';
+import { IUseSkeletonValueProps } from '../types';
 
 const {
   Clock,
@@ -22,10 +23,10 @@ const {
 
 type IRunTimingProps = {
   clock: Animated.Clock;
-  speed?: number;
+  speed: number;
 };
 
-const runTiming = ({ clock, speed = 1000 }: IRunTimingProps) => {
+const runTiming = ({ clock, speed }: IRunTimingProps) => {
   const state = {
     finished: new Value(0),
     position: new Value(0),
@@ -53,7 +54,7 @@ const runTiming = ({ clock, speed = 1000 }: IRunTimingProps) => {
   ]);
 };
 
-const useSkeletonValue = (speed?: number) => {
+const useSkeletonValue = ({ speed = 1000 }: IUseSkeletonValueProps = {}) => {
   const progress = new Value(0);
   const clock = new Clock();
 

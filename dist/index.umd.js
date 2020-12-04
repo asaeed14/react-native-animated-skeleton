@@ -40,7 +40,7 @@
      */
     var Clock = Animated__default.Clock, Value = Animated__default.Value, useCode = Animated__default.useCode, set = Animated__default.set, block = Animated__default.block, cond = Animated__default.cond, startClock = Animated__default.startClock, clockRunning = Animated__default.clockRunning, not = Animated__default.not, eq = Animated__default.eq, timing = Animated__default.timing;
     var runTiming = function (_a) {
-        var clock = _a.clock, _b = _a.speed, speed = _b === void 0 ? 1000 : _b;
+        var clock = _a.clock, speed = _a.speed;
         var state = {
             finished: new Value(0),
             position: new Value(0),
@@ -63,7 +63,8 @@
             state.position,
         ]);
     };
-    var useSkeletonValue = function (speed) {
+    var useSkeletonValue = function (_a) {
+        var _b = (_a === void 0 ? {} : _a).speed, speed = _b === void 0 ? 1000 : _b;
         var progress = new Value(0);
         var clock = new Clock();
         useCode(function () { return block([set(progress, runTiming({ clock: clock, speed: speed }))]); }, [
@@ -74,8 +75,8 @@
 
     var interpolate = Animated__default.interpolate, Extrapolate = Animated__default.Extrapolate;
     var Skeleton = function (_b) {
-        var _c = _b.loaderStyle, loaderStyle = _c === void 0 ? {} : _c, _d = _b.numberOfItems, numberOfItems = _d === void 0 ? 3 : _d, _e = _b.direction, direction = _e === void 0 ? 'row' : _e;
-        var progress = useSkeletonValue();
+        var _c = _b.loaderStyle, loaderStyle = _c === void 0 ? {} : _c, _d = _b.numberOfItems, numberOfItems = _d === void 0 ? 3 : _d, _e = _b.direction, direction = _e === void 0 ? 'row' : _e, _f = _b.speed, speed = _f === void 0 ? 1000 : _f;
+        var progress = useSkeletonValue({ speed: speed });
         var length = numberOfItems;
         var delta = 1 / length;
         return (React.createElement(reactNative.View, { style: { flexDirection: direction } }, Array.from(Array(numberOfItems), function (_a, i) {

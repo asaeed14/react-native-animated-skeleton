@@ -18,8 +18,9 @@ const Skeleton: React.FC<ISkeletonProps> = ({
   loaderStyle = {},
   numberOfItems = 3,
   direction = 'row',
+  speed = 1000,
 }) => {
-  const progress: Animated.Value<number> = useSkeletonValue();
+  const progress: Animated.Value<number> = useSkeletonValue({ speed });
   const length = numberOfItems;
   const delta = 1 / length;
 
