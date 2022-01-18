@@ -1,10 +1,10 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react'), require('react-native'), require('react-native-reanimated')) :
-    typeof define === 'function' && define.amd ? define(['exports', 'react', 'react-native', 'react-native-reanimated'], factory) :
-    (factory((global.index = {}),global.React,global.reactNative,global.Animated));
-}(this, (function (exports,React,reactNative,Animated) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react-native'), require('react'), require('react-native-reanimated')) :
+    typeof define === 'function' && define.amd ? define(['exports', 'react-native', 'react', 'react-native-reanimated'], factory) :
+    (factory((global.index = {}),global.reactNative,global.React,global.Animated));
+}(this, (function (exports,reactNative,React,Animated) { 'use strict';
 
-    React = React && React.hasOwnProperty('default') ? React['default'] : React;
+    var React__default = 'default' in React ? React['default'] : React;
     var Animated__default = 'default' in Animated ? Animated['default'] : Animated;
 
     /*! *****************************************************************************
@@ -33,66 +33,34 @@
         return __assign.apply(this, arguments);
     };
 
+    // @ts-ignore
+    function useSkeletonAnimation(_a) {
+        var _b = _a.speed, speed = _b === void 0 ? 1000 : _b, _c = _a.targetOpacityValue, targetOpacityValue = _c === void 0 ? 0.2 : _c;
+        var shared = Animated.useSharedValue(0);
+        React.useEffect(function () {
+            shared.value = Animated.withRepeat(Animated.withTiming(1, { duration: speed }), Infinity, true);
+        }, []);
+        var animatedStyle = Animated.useAnimatedStyle(function () { return ({
+            opacity: Animated.interpolate(shared.value, [0, 1], [targetOpacityValue, 1]),
+        }); });
+        return animatedStyle;
+    }
+
     /**
      *
-     * useSkeletonValue
+     * Loader
      *
      */
-    var Clock = Animated__default.Clock, Value = Animated__default.Value, useCode = Animated__default.useCode, set = Animated__default.set, block = Animated__default.block, cond = Animated__default.cond, startClock = Animated__default.startClock, clockRunning = Animated__default.clockRunning, not = Animated__default.not, eq = Animated__default.eq, timing = Animated__default.timing;
-    var runTiming = function (_a) {
-        var clock = _a.clock, speed = _a.speed;
-        var state = {
-            finished: new Value(0),
-            position: new Value(0),
-            time: new Value(0),
-            frameTime: new Value(0),
-        };
-        var config = {
-            toValue: new Value(1),
-            duration: speed,
-            easing: Animated.Easing.inOut(Animated.Easing.ease),
-        };
-        return block([
-            cond(not(clockRunning(clock)), startClock(clock), timing(clock, state, config)),
-            cond(eq(state.finished, 1), [
-                set(state.finished, 0),
-                set(state.frameTime, 0),
-                set(state.time, 0),
-                set(config.toValue, cond(eq(state.position, 1), 0, 1)),
-            ]),
-            state.position,
-        ]);
-    };
-    var useSkeletonValue = function (_a) {
-        var _b = (_a === void 0 ? {} : _a).speed, speed = _b === void 0 ? 1000 : _b;
-        var progress = new Value(0);
-        var clock = new Clock();
-        useCode(function () { return block([set(progress, runTiming({ clock: clock, speed: speed }))]); }, [
-            progress,
-        ]);
-        return progress;
-    };
-
-    var interpolate = Animated__default.interpolate, Extrapolate = Animated__default.Extrapolate;
     var Skeleton = function (_b) {
-        var _c = _b.loaderStyle, loaderStyle = _c === void 0 ? {} : _c, _d = _b.numberOfItems, numberOfItems = _d === void 0 ? 3 : _d, _e = _b.direction, direction = _e === void 0 ? 'row' : _e, _f = _b.speed, speed = _f === void 0 ? 1000 : _f;
-        var progress = useSkeletonValue({ speed: speed });
-        var length = numberOfItems;
-        var delta = 1 / length;
-        return (React.createElement(reactNative.View, { style: { flexDirection: direction } }, Array.from(Array(numberOfItems), function (_a, i) {
-            var start = i * delta;
-            var end = start + delta;
-            var opacity = interpolate(progress, {
-                inputRange: [start, end],
-                outputRange: [0.5, 1],
-                extrapolate: Extrapolate.CLAMP,
-            });
-            return (React.createElement(Animated__default.View, { key: "s" + i, style: [__assign({}, loaderStyle), { opacity: opacity }] }));
+        var _c = _b.loaderStyle, loaderStyle = _c === void 0 ? {} : _c, _d = _b.numberOfItems, numberOfItems = _d === void 0 ? 3 : _d, _e = _b.direction, direction = _e === void 0 ? 'row' : _e, _f = _b.speed, speed = _f === void 0 ? 1000 : _f, _g = _b.targetOpacityValue, targetOpacityValue = _g === void 0 ? 0.2 : _g;
+        var animatedStyle = useSkeletonAnimation({ speed: speed, targetOpacityValue: targetOpacityValue });
+        return (React__default.createElement(reactNative.View, { style: { flexDirection: direction } }, Array.from(Array(numberOfItems), function (_a, i) {
+            return (React__default.createElement(Animated__default.View, { key: "s" + i, style: [__assign({}, loaderStyle), animatedStyle] }));
         })));
     };
 
     exports.Skeleton = Skeleton;
-    exports.useSkeletonValue = useSkeletonValue;
+    exports.useSkeletonAnimation = useSkeletonAnimation;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

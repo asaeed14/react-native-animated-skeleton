@@ -13,4 +13,5 @@ export interface ISkeletonProps extends IUseSkeletonValueProps {
 
 export interface IUseSkeletonValueProps {
   speed?: number;
+  targetOpacityValue?: number;
 }

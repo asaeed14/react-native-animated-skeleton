@@ -3,6 +3,8 @@
  * Loader
  *
  */
+
+// @ts-ignore
 import React from 'react';
 // @ts-ignore
 import { View } from 'react-native';
@@ -10,40 +12,31 @@ import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
 import { ISkeletonProps } from '../types';
-import useSkeletonValue from './useSkeletonValue';
+import { useSkeletonAnimation } from './useSkeletonAnimation';
 
-const { interpolate, Extrapolate } = Animated;
 
 const Skeleton: React.FC<ISkeletonProps> = ({
   loaderStyle = {},
   numberOfItems = 3,
   direction = 'row',
   speed = 1000,
+  targetOpacityValue=0.2,
 }) => {
-  const progress: Animated.Value<number> = useSkeletonValue({ speed });
-  const length = numberOfItems;
-  const delta = 1 / length;
+  const animatedStyle = useSkeletonAnimation({speed,targetOpacityValue});
 
   return (
     <View style={{ flexDirection: direction }}>
-      {Array.from(Array(numberOfItems), (_a, i) => {
-        const start = i * delta;
-        const end = start + delta;
-        const opacity = interpolate(progress, {
-          inputRange: [start, end],
-          outputRange: [0.5, 1],
-          extrapolate: Extrapolate.CLAMP,
-        });
-        return (
+      {Array.from(Array(numberOfItems), (_a, i) => 
+         (
           <Animated.View
             key={`s${i}`}
-            style={[{ ...loaderStyle }, { opacity }]}
+            style={[{ ...loaderStyle }, animatedStyle]}
           />
-        );
-      })}
+        )
+      )}
     </View>
   );
 };
 export default Skeleton;
 
-export { useSkeletonValue };
+export { useSkeletonAnimation };

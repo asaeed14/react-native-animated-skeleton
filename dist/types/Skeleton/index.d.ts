@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import { ISkeletonProps } from '../types';
-import useSkeletonValue from './useSkeletonValue';
+import { useSkeletonAnimation } from './useSkeletonAnimation';
 declare const Skeleton: React.FC<ISkeletonProps>;
 export default Skeleton;
-export { useSkeletonValue };
+export { useSkeletonAnimation };

@@ -19,8 +19,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.useSkeletonValue = exports.Skeleton = void 0;
+exports.useSkeletonAnimation = exports.Skeleton = void 0;
 var Skeleton_1 = __importStar(require("./Skeleton"));
 exports.Skeleton = Skeleton_1.default;
-Object.defineProperty(exports, "useSkeletonValue", { enumerable: true, get: function () { return Skeleton_1.useSkeletonValue; } });
+Object.defineProperty(exports, "useSkeletonAnimation", { enumerable: true, get: function () { return Skeleton_1.useSkeletonAnimation; } });
 //# sourceMappingURL=index.js.map

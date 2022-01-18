@@ -1,3 +1,3 @@
-import Skeleton, { useSkeletonValue } from './Skeleton';
+import Skeleton, { useSkeletonAnimation } from './Skeleton';
 import { ISkeletonProps } from './types';
-export { Skeleton, useSkeletonValue, ISkeletonProps as SkeletonProps };
+export { Skeleton, useSkeletonAnimation, ISkeletonProps as SkeletonProps };

@@ -1,6 +1,6 @@
-import React from 'react';
 import { View } from 'react-native';
-import Animated, { Easing } from 'react-native-reanimated';
+import React, { useEffect } from 'react';
+import Animated, { interpolate, useAnimatedStyle, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated';
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
@@ -28,63 +28,31 @@ var __assign = function() {
     return __assign.apply(this, arguments);
 };
 
+// @ts-ignore
+function useSkeletonAnimation(_a) {
+    var _b = _a.speed, speed = _b === void 0 ? 1000 : _b, _c = _a.targetOpacityValue, targetOpacityValue = _c === void 0 ? 0.2 : _c;
+    var shared = useSharedValue(0);
+    useEffect(function () {
+        shared.value = withRepeat(withTiming(1, { duration: speed }), Infinity, true);
+    }, []);
+    var animatedStyle = useAnimatedStyle(function () { return ({
+        opacity: interpolate(shared.value, [0, 1], [targetOpacityValue, 1]),
+    }); });
+    return animatedStyle;
+}
+
 /**
  *
- * useSkeletonValue
+ * Loader
  *
  */
-var Clock = Animated.Clock, Value = Animated.Value, useCode = Animated.useCode, set = Animated.set, block = Animated.block, cond = Animated.cond, startClock = Animated.startClock, clockRunning = Animated.clockRunning, not = Animated.not, eq = Animated.eq, timing = Animated.timing;
-var runTiming = function (_a) {
-    var clock = _a.clock, speed = _a.speed;
-    var state = {
-        finished: new Value(0),
-        position: new Value(0),
-        time: new Value(0),
-        frameTime: new Value(0),
-    };
-    var config = {
-        toValue: new Value(1),
-        duration: speed,
-        easing: Easing.inOut(Easing.ease),
-    };
-    return block([
-        cond(not(clockRunning(clock)), startClock(clock), timing(clock, state, config)),
-        cond(eq(state.finished, 1), [
-            set(state.finished, 0),
-            set(state.frameTime, 0),
-            set(state.time, 0),
-            set(config.toValue, cond(eq(state.position, 1), 0, 1)),
-        ]),
-        state.position,
-    ]);
-};
-var useSkeletonValue = function (_a) {
-    var _b = (_a === void 0 ? {} : _a).speed, speed = _b === void 0 ? 1000 : _b;
-    var progress = new Value(0);
-    var clock = new Clock();
-    useCode(function () { return block([set(progress, runTiming({ clock: clock, speed: speed }))]); }, [
-        progress,
-    ]);
-    return progress;
-};
-
-var interpolate = Animated.interpolate, Extrapolate = Animated.Extrapolate;
 var Skeleton = function (_b) {
-    var _c = _b.loaderStyle, loaderStyle = _c === void 0 ? {} : _c, _d = _b.numberOfItems, numberOfItems = _d === void 0 ? 3 : _d, _e = _b.direction, direction = _e === void 0 ? 'row' : _e, _f = _b.speed, speed = _f === void 0 ? 1000 : _f;
-    var progress = useSkeletonValue({ speed: speed });
-    var length = numberOfItems;
-    var delta = 1 / length;
+    var _c = _b.loaderStyle, loaderStyle = _c === void 0 ? {} : _c, _d = _b.numberOfItems, numberOfItems = _d === void 0 ? 3 : _d, _e = _b.direction, direction = _e === void 0 ? 'row' : _e, _f = _b.speed, speed = _f === void 0 ? 1000 : _f, _g = _b.targetOpacityValue, targetOpacityValue = _g === void 0 ? 0.2 : _g;
+    var animatedStyle = useSkeletonAnimation({ speed: speed, targetOpacityValue: targetOpacityValue });
     return (React.createElement(View, { style: { flexDirection: direction } }, Array.from(Array(numberOfItems), function (_a, i) {
-        var start = i * delta;
-        var end = start + delta;
-        var opacity = interpolate(progress, {
-            inputRange: [start, end],
-            outputRange: [0.5, 1],
-            extrapolate: Extrapolate.CLAMP,
-        });
-        return (React.createElement(Animated.View, { key: "s" + i, style: [__assign({}, loaderStyle), { opacity: opacity }] }));
+        return (React.createElement(Animated.View, { key: "s" + i, style: [__assign({}, loaderStyle), animatedStyle] }));
     })));
 };
 
-export { Skeleton, useSkeletonValue };
+export { Skeleton, useSkeletonAnimation };
 //# sourceMappingURL=index.es5.js.map
